@@ -4,6 +4,12 @@ import type { Bindings } from '../types'
 
 export const corsMiddleware: MiddlewareHandler<{ Bindings: Bindings }> = async (c, next) => {
   const allowedOrigin = c.env.ALLOWED_ORIGIN
+  const browserOrigin = c.req.header('Origin') // This is the real origin from 
+
+  console.log('--- CORS DEBUG ---')
+  console.log('Configured ALLOWED_ORIGIN:', allowedOrigin)
+  console.log('Browser Inbound ORIGIN:', browserOrigin)
+  console.log('------------------')
 
   if (!allowedOrigin) {
     return c.json({
