@@ -11,6 +11,10 @@ export const corsMiddleware: MiddlewareHandler<{ Bindings: Bindings }> = async (
     }, 500)
   }
 
+  if (origin !== allowedOrigin) {
+    return new Response("Forbidden", { status: 403 });
+  }
+
   const handler = cors({
     origin: (origin) => origin === allowedOrigin ? origin : null,
     allowMethods: ['GET', 'POST', 'OPTIONS'],
