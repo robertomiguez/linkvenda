@@ -29,16 +29,29 @@ const handleImageAction = async () => {
 }
 
 const shareWhatsApp = async () => {
-  // If native share is available (mobile devices usually), it triggers WhatsApp's native link preview seamlessly
-  if (navigator.share && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+  // Try to use Web Share API (supports files on modern desktop browsers)
+  if (navigator.share) {
     try {
-      await navigator.share({
+      const shareData: ShareData = {
         title: 'Oferta',
         text: props.text,
-      })
-      return
+      };
+
+      if (props.image) {
+        try {
+          const response = await fetch(props.image);
+          const blob = await response.blob();
+          const file = new File([blob], 'oferta.jpg', { type: blob.type });
+          shareData.files = [file];
+        } catch (e) {
+          console.warn('Could not fetch image for native share', e);
+        }
+      }
+
+      await navigator.share(shareData);
+      return;
     } catch (e) {
-      console.warn('Native share failed, falling back to web link.', e)
+      console.warn('Native share failed, falling back to web link.', e);
     }
   }
 

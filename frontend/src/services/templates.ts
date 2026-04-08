@@ -105,12 +105,18 @@ export function generatePost(title: string, price: string, url: string): string 
 
   const template = `${getRandom(intros)}\n\n${getRandom(bodies)}\n\n${getRandom(outtros)}`
 
+  // Force the URL to be at the very end of the content to ensure WhatsApp's preview engine catches it
+  const urlPlaceholder = '{link}'
+  
+  // Replace title and price
   let finalContent = template
     .replace(/{product_name}/g, safeTitle)
     .replace(/{price}/g, safePrice)
 
-  // Force the URL to be completely isolated to ensure WhatsApp's preview engine catches it
-  finalContent = finalContent.replace(/{link}/g, `\n${safeUrl}\n`)
-
-  return finalContent.trim()
+  // Remove the placeholder from its original position if it exists,
+  // and append the URL at the very end.
+  const regex = new RegExp(`\\s*${urlPlaceholder}\\s*`, 'g')
+  finalContent = finalContent.replace(regex, '')
+  
+  return `${finalContent.trim()}\n\n${safeUrl}`
 }
