@@ -1,0 +1,40 @@
+# dependências
+node_modules/
+
+# variáveis de ambiente e segredos
+.env
+.env.*
+!.env.example
+.dev.vars
+
+# builds de typescript / javascript
+dist/
+dist-ssr/
+build/
+out/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# sistema operacional e editores
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# caches e artefatos de ferramentas
+.turbo/
+.vercel/
+.npm/
+coverage/
+.wrangler/
+
+# scripts de teste/debug soltos
+test-*.js
+test-*.ts
