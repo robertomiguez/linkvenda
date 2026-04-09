@@ -45,4 +45,5 @@ jobs:
           git add .
           VERSION=$(node -p "require('./package.json').version")
           git commit -m "chore: bump version to $VERSION [skip ci]"
+          git pull --rebase origin main
           git push origin main --tags
