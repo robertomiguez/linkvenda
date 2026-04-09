@@ -12,6 +12,7 @@ const activeTab = ref('home')
 const historyItems = ref<HistoryItem[]>([])
 const historyLoading = ref(false)
 const backupMessage = ref('')
+const appVersion = __APP_VERSION__
 
 const doBackup = async () => {
   try {
@@ -211,6 +212,10 @@ const onNavigate = async (tabId: string) => {
           <div v-if="backupMessage" style="margin-top: 12px; font-size: 0.85rem; color: var(--primary-color);">
             {{ backupMessage }}
           </div>
+        </div>
+        
+        <div style="margin-top: 32px; font-size: 0.75rem; color: var(--text-muted); opacity: 0.6;">
+          v{{ appVersion }}
         </div>
       </div>
       <div style="height: 100px;"></div>
