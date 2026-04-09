@@ -86,20 +86,13 @@ function getRandom<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)]
 }
 
-function truncateTitle(title: string, maxLength: number = 60): string {
+function truncateTitle(title: string): string {
   if (!title) return 'Produto incrível';
-  if (title.length <= maxLength) return title;
-  const truncated = title.substring(0, maxLength);
-  // Try to cut at the last space to avoid cutting words in half
-  const lastSpace = truncated.lastIndexOf(' ');
-  if (lastSpace > 0) {
-    return truncated.substring(0, lastSpace) + '...';
-  }
-  return truncated + '...';
+  return title.split(' ').slice(0, 3).join(' ');
 }
 
 export function generatePost(title: string, price: string, url: string): string {
-  const safeTitle = truncateTitle(title, 50)  // Even shorter to be safe
+  const safeTitle = truncateTitle(title)
   const safePrice = price || 'R$ --,--'
   const safeUrl = url || 'https://linkvenda.com'
 
