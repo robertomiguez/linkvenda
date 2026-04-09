@@ -48,8 +48,13 @@ jobs:
           git add .
           VERSION=$(node -p "require('./package.json').version")
           git commit -m "chore: bump version to $VERSION [skip ci]"
-          
-          # More robust pull and push
-          git fetch origin main
-          git rebase origin/main
-          git push origin HEAD:main --tags
+
+          # Retry loop to handle concurrent pushes
+          for i in 1 2 3 4 5; do
+            git fetch origin main
+            git rebase --no-reapply-cherry-picks origin/main && \
+            git push origin HEAD:main --tags && break || {
+              echo "Push attempt $i failed, retrying in 5s..."
+              sleep 5
+            }
+          done
