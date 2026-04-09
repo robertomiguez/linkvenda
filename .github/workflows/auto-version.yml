@@ -5,8 +5,11 @@ on:
     branches:
       - main
     paths-ignore:
-      - '**/package.json'
-      - '.github/workflows/auto-version.yml'
+      - "**/package.json"
+      - ".github/workflows/auto-version.yml"
+
+permissions:
+  contents: write
 
 jobs:
   bump-version:
@@ -21,7 +24,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Configure Git
         run: |
