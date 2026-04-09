@@ -32,10 +32,11 @@ const shareWhatsApp = async () => {
   // Use Web Share API for native experience (better for link previews)
   if (navigator.share) {
     try {
+      // We only pass 'text' because it already contains the URL at the end.
+      // Passing 'url' separately causes many mobile browsers to append it a second time.
       await navigator.share({
         title: 'Oferta',
         text: props.text,
-        url: props.url,
       });
       return;
     } catch (e) {
