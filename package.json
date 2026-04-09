@@ -8,7 +8,8 @@
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
     "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install",
     "version:sync": "node scripts/sync-versions.js",
-    "version": "npm run version:sync && git add frontend/package.json backend/package.json"
+    "version": "npm run version:sync && git add frontend/package.json backend/package.json",
+    "release": "npm version patch"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
