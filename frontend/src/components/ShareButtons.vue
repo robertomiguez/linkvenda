@@ -29,26 +29,14 @@ const handleImageAction = async () => {
 }
 
 const shareWhatsApp = async () => {
-  // Try to use Web Share API (supports files on modern desktop browsers)
+  // Use Web Share API for native experience (better for link previews)
   if (navigator.share) {
     try {
-      const shareData: ShareData = {
+      await navigator.share({
         title: 'Oferta',
         text: props.text,
-      };
-
-      if (props.image) {
-        try {
-          const response = await fetch(props.image);
-          const blob = await response.blob();
-          const file = new File([blob], 'oferta.jpg', { type: blob.type });
-          shareData.files = [file];
-        } catch (e) {
-          console.warn('Could not fetch image for native share', e);
-        }
-      }
-
-      await navigator.share(shareData);
+        url: props.url,
+      });
       return;
     } catch (e) {
       console.warn('Native share failed, falling back to web link.', e);
